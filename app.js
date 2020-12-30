@@ -36,3 +36,26 @@ list.addEventListener('click', e => {
       e.target.parentElement.remove();
   }
 });
+
+// 検索機能
+const search = document.querySelector('.search input');
+
+const filterTasks = (term) => {
+
+    Array.from(list.children)
+        // フィルタ条件
+        // 条件に一致しない要素は表示しない
+        .filter((todo) => !todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.add('filtered'));
+        
+        Array.from(list.children)
+        // 条件に一致する要素は表示する
+        .filter((todo) => todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.remove('filtered'));
+};
+
+search.addEventListener('keyup', () => {
+    // 空白削除かつ、小文字に変換(大文字・小文字の区別をなくす)
+    const term = search.value.trim().toLowerCase();
+    filterTasks(term);
+});
